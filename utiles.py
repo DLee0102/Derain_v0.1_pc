@@ -2,6 +2,22 @@ import torch
 import numpy as np
 from PIL import Image
 from torchvision import transforms
+import cv2
+
+def save_img(input_img, output_path_, index):
+    cv2.imwrite(output_path_ + "/" + "result_" + str(index) + ".jpg", input_img)
+
+def LaplacianValue(input_img, THRESHOLD = 100.0):
+    gray = input_img
+
+    gaussian = cv2.GaussianBlur(gray, (3, 3), 1)
+    imageVar = cv2.Laplacian(gaussian, cv2.CV_64F).var()
+    # if not imageVar < THRESHOLD:
+        # im_name = '(' + input_path_.split('(')[1]
+        # print(im_name,' ',imageVar)
+    print("Laplacian=" + " " + str(imageVar))
+    
+    return imageVar
 
 def tensor_to_np(tensor):
     img = tensor.mul(255).byte()

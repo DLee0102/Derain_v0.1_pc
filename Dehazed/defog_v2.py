@@ -73,7 +73,7 @@ def PSNR(target,ref):
     PSNR = 20*math.log10(MAXI/math.sqrt(MSE))
     return PSNR
 
-def deFogging(input_img, output_path_, index):
+def deFogging(input_img):
     I = input_img/255.0
     dark_channel = get_min_channel(I)
     dark_channel_1 = min_filter(dark_channel,r=7)
@@ -91,7 +91,8 @@ def deFogging(input_img, output_path_, index):
     J = J*255
     J =np.uint8(J)
 
-    cv2.imwrite(output_path_ + "/" + "result_" + str(index) + ".jpg",J)
+    # cv2.imwrite(output_path_ + "/" + "result_" + str(index) + ".jpg",J)
+    output_img = J
 
     psnr = PSNR(J,I*255)
     print(f"PSNR:{psnr}")
@@ -99,5 +100,7 @@ def deFogging(input_img, output_path_, index):
     # ssim评估，值越接近1图像相似度越高
     ssim = sk_cpt_ssim(J,I*255, win_size=11, data_range=255, multichannel=True)
     print(f"ssim:{ssim}")
+
+    return output_img
 
 
