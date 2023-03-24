@@ -92,6 +92,7 @@ class PReNet_r(nn.Module):
 def prepareData(input_path_):
     test_tfm = transforms.Compose([
         # transforms.CenterCrop([128, 128]),    # 这行没有必要，用原始图片进行测试即可
+        # transforms.Resize(256),
         transforms.ToTensor(),
     ])
 
@@ -103,7 +104,7 @@ def prepareData(input_path_):
 def prepareModel(input_path_, model_path_):
     net = PReNet_r(use_GPU=True).to('cuda')     # 用cuda加速测试，也可以不用，不用cuda加速测试速度会很慢
     # net = PReNet_r(use_GPU=False)     # 用cuda加速测试，也可以不用，不用cuda加速测试速度会很慢
-    net.load_state_dict(torch.load(model_path_, map_location=torch.device('cpu')))      # 加载训练好的模型参数
+    net.load_state_dict(torch.load(model_path_, map_location=torch.device('cuda')))      # 加载训练好的模型参数
     net.eval()      # 将模型切换到测试模式
 
     test_set = prepareData(input_path_)

@@ -3,9 +3,12 @@ import numpy as np
 from PIL import Image
 from torchvision import transforms
 import cv2
+from torchvision.utils import save_image
 
 def save_img(input_img, output_path_, index):
     cv2.imwrite(output_path_ + "/" + "result_" + str(index) + ".jpg", input_img)
+def save_tensor(input_img, output_path_, index):
+    save_image(input_img, output_path_ + "/" + "result_" + str(index) + ".jpg")
 
 def LaplacianValue(input_img, THRESHOLD = 100.0):
     gray = input_img
